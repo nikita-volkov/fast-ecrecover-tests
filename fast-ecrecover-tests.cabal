@@ -32,6 +32,9 @@ executable fast-ecrecover-tests
     ethereum-rlp,
     blockapps-data,
     blockapps-util,
+    -- 
+    tasty < 0.12,
+    tasty-hunit < 0.10,
     -- basics:
     rebase < 2
 
