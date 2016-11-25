@@ -48,7 +48,7 @@ fastGetPubKeyFromSignatureEqualsDerivePubKeyTest =
     generateTransaction n >>= onTransaction
   where
     onTransaction transaction =
-      assertEqual "Unequal" (Just derivedPubKey) fastPubKey
+      assertEqual "Unequal" (Just derivedPubKey') fastPubKey
       where
         extendedSignature =
           extendedSignatureFromTransaction transaction
@@ -58,7 +58,9 @@ fastGetPubKeyFromSignatureEqualsDerivePubKeyTest =
           E.getPubKeyFromSignature_fast extendedSignature hash
         derivedPubKey =
           A.derivePubKey prvKey
-
+        derivedPubKey' = 
+          G.toPubKeyG $ A.derivePubKey prvKeyU
+          
 slowGetPubKeyFromSignatureEqualsDerivePubKeyTest =
   forM_ [0..100] $ \n -> do
     generateTransaction n >>= onTransaction
@@ -78,6 +80,10 @@ slowGetPubKeyFromSignatureEqualsDerivePubKeyTest =
 prvKey :: A.PrvKey
 prvKey =
   fromJust (A.makePrvKey 0xeede3a2ed7d98cfee7ee7f49fede3f5aa6ab0bc9dc9f2bd7198900e3c7105c9c)
+
+prvKeyU :: A.PrvKeyU
+prvKeyU =
+  fromJust (A.makePrvKeyU 0xeede3a2ed7d98cfee7ee7f49fede3f5aa6ab0bc9dc9f2bd7198900e3c7105c9c)
 
 address :: C.Address
 address =
